@@ -6,3 +6,66 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
+model User{
+  id               String          @id@default(uuid())
+  firstaName       String
+  lastName         String
+  email            String
+  passwrodHash     String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@map("users")
+  @@index([firstaName])
+}
+
+
+model Class{
+  id               String          @id@default(uuid())
+  course           String     
+  section          String
+  semester         Int
+  Subjects         Subject[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@map("classes")
+  @@index([course, section, semester])
+}
+
+
+model Subject{
+  id               String         @id@default(uuid())
+  name             String
+  classId          String
+  resources        Resource[]
+  class            Class          @relation(fields: [classId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@map("subjects")
+  @@index([name, classId])
+}
+
+
+model Resource{
+  id              String         @id@default(uuid())
+  name            String
+  link            String
+  type            ResourceType
+  subjectId       String
+  subject         Subject        @relation(fields: [subjectId], references: [id])
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("resources")
+  @@index([name, link])
+}
+
+
+enum ResourceType{
+  video
+  document
+}
