@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader,CardTitle} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { ShieldCheck, Eye, EyeOff, User, Mail, Phone, Lock } from "lucide-react"
+import {  Eye, EyeOff, User, Mail, Phone, Lock } from "lucide-react"
 import { useState } from "react"
 
 export default function AdminSignUpForm() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-muted/40 via-background to-muted/40 p-6 md:p-12">
@@ -31,7 +30,6 @@ export default function AdminSignUpForm() {
         <CardContent className="px-10 pb-6">
           <form>
             <div className="space-y-8">
-              {/* Personal Information Section */}
               <div className="space-y-5">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-muted-foreground" />
