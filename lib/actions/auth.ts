@@ -1,14 +1,15 @@
 "use server"
 
-import { loginAdminprops, registerAdminprops } from "@/types"
-import { regestrationSchema } from "@/zod"
+import type { jwtSecret } from "@/types"
+import {  loginAdminprops, registerAdminprops } from "@/types"
+import { loginSchema, regestrationSchema } from "@/zod"
 import bcrypt from "bcryptjs"
 import { adminDetails } from "@/admins"
 import jwt from "jsonwebtoken"
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 
-const jwtSecret = process.env.JWT_SECRET as string
+const jwtSecret = process.env.JWT_SECRET as string;
 
 export async function isAuthenticated(): Promise<boolean> {
   try {
@@ -100,10 +101,57 @@ export async function registerAdmin(data: registerAdminprops) {
 }
 
 export async function login(data : loginAdminprops ){
-  try {
-    // todo 
-    const payload = data as loginAdminprops
-  } catch (error) {
+  try { 
+    const payload = data as loginAdminprops;
+    const parsedPayload = loginSchema.safeParse(data);
+
+    // if (!parsedPayload.success) {
+    //   console.log("Invalid input from Zod")
+    //   return { success: false, message: "Invalid input" }
+    // }
+
+    const isExsiting = await prisma.user.findFirst({
+      where : {
+        email : payload.email
+      }
+    })
+
+    if(!isExsiting){
+      console.log("The Admin details not found")
+      return 
+    }
+
+    const isSamePassword  = await bcrypt.compare(data.password,isExsiting.passwordHash)
+
+    if(!isSamePassword){
+      console.log("The password verification falied");
+      return
+    }
+ 
+    const token = jwt.sign(
+      { id: isExsiting.id },
+      jwtSecret,
+      { expiresIn: "7d" }
+    )
+
     
+    ;(await cookies()).set("admin_token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    })
+
+    return {
+      success: true,
+      message: "Admin registered successfully",
+    }
+  } catch (error) {
+    console.error("Registration error:", error)
+    return {
+      success: false,
+      message: "Internal server error",
+    }
   }
 }
