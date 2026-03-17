@@ -16,3 +16,5 @@ export interface admiDetails {
     email  : string
     phoneNumber : string
 }
+
+export type jwtSecret = string | undefined;
