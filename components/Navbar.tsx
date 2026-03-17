@@ -13,11 +13,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md transition-all">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-8">
-        
-        {/* LEFT COMPONENT: Logo & Main Navigation */}
         <div className="flex items-center gap-8">
-          
-          {/* Brand Logo */}
           <Link
             href="/home"
             className="flex items-center gap-2 font-bold tracking-tight text-foreground transition-opacity hover:opacity-80"
