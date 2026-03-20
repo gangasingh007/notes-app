@@ -10,5 +10,11 @@ export const regestrationSchema = z.object({
 
 export const loginSchema = z.object({
     email : z.string().email(),
-    passwsord : z.string()
+    password : z.string().min(6)
+})
+
+export const addClassSchema  =z.object({
+    course : z.string(),
+    semester : z.string(),
+    section : z.string()
 })

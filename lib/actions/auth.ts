@@ -105,12 +105,12 @@ export async function login(data : loginAdminprops ){
     const payload = data as loginAdminprops;
     const parsedPayload = loginSchema.safeParse(data);
 
-    // todo : "check why the zod validation is failing on the signup keyframe"
+    // todo : "check why the zod validation is failing on the signin keyframe "
 
-    // if (!parsedPayload.success) {
-    //   console.log("Invalid input from Zod")
-    //   return { success: false, message: "Invalid input" }
-    // }
+    if (!parsedPayload.success) {
+      console.log("Invalid input from Zod")
+      return { success: false, message: "Invalid input" }
+    }
 
     const isExsiting = await prisma.user.findFirst({
       where : {

@@ -27,13 +27,14 @@ model Class{
   id               String          @id@default(uuid())
   course           String     
   section          String
-  semester         Int
+  semester         String
   Subjects         Subject[]
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
 
   @@map("classes")
   @@index([course, section, semester])
+  @@unique([course, section, semester])
 }
 
 

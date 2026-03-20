@@ -17,4 +17,12 @@ export interface admiDetails {
     phoneNumber : string
 }
 
+export type classProps = {
+    course: string,
+    semester : string,
+    section : string
+}
+
+export type NavItem = { label: string; href: string }
+
 export type jwtSecret = string | undefined;

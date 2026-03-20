@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { BookOpen } from "lucide-react"
 
-type NavItem = { label: string; href: string }
-
 export default function Navbar() {
   const pathname = usePathname()
 
@@ -26,36 +24,19 @@ export default function Navbar() {
             </span>
           </Link>
         </div>
-
-        {/* RIGHT COMPONENT: Auth Actions */}
         <div className="flex items-center gap-4">
           <Link
             href="/home"
-            className="hidden sm:inline-block text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="font-semibold sm:inline-block text-sm  text-muted-foreground transition-colors hover:text-foreground"
           >
             Home
           </Link>
-          <Button asChild size="sm" className="hidden sm:inline-flex shadow-md active:scale-95 transition-transform">
+          <Button asChild size="sm" className="font-semibold sm:inline-flex shadow-md active:scale-95 transition-transform">
             <Link href="/admin">
               Admin
             </Link>
           </Button>
-
-          {/* Placeholder for Mobile Menu Toggle */}
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <span className="sr-only">Open Menu</span>
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </Button>
         </div>
-
       </div>
     </header>
   )
