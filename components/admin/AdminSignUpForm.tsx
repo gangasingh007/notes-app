@@ -62,8 +62,6 @@ export default function AdminSignUpForm() {
       }
 
       setSuccess("Admin registered successfully! Redirecting...")
-
-      // redirect after success
       setTimeout(() => {
         router.push("/admin")
       }, 1200)
