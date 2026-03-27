@@ -105,8 +105,6 @@ export async function login(data : loginAdminprops ){
     const payload = data as loginAdminprops;
     const parsedPayload = loginSchema.safeParse(data);
 
-    // todo : "check why the zod validation is failing on the signin keyframe "
-
     if (!parsedPayload.success) {
       console.log("Invalid input from Zod")
       return { success: false, message: "Invalid input" }
@@ -155,5 +153,23 @@ export async function login(data : loginAdminprops ){
       success: false,
       message: "Internal server error",
     }
+  }
+}
+
+export async function logout() {
+  try {
+    const cookieStore = await cookies()
+    cookieStore.set("admin_token", "", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 0,
+      path: "/",
+    })
+
+    return { success: true, message: "Logged out successfully" }
+  } catch (error) {
+    console.error("Logout error:", error)
+    return { success: false, message: "Failed to logout" }
   }
 }

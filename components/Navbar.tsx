@@ -1,15 +1,39 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { redirect, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Home, ShieldCheck, Menu, X } from "lucide-react"
+import { BookOpen, Home, ShieldCheck, Menu, X , LogOut } from "lucide-react"
 import { useState, useEffect } from "react"
+import { logout } from "@/lib/actions/auth"
+import { checkAuth } from "@/store/auth"
 
-export default function Navbar() {
+export default  function Navbar() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isAuth, setIsAuth] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+
+    checkAuth()
+      .then((result) => {
+        if (!cancelled) setIsAuth(result)
+      })
+      .catch(() => {
+        if (!cancelled) setIsAuth(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+ 
+  async function handlelogout(){
+    await logout();
+    redirect("/admin")
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,12 +43,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false)
   }, [pathname])
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden"
@@ -53,7 +75,7 @@ export default function Navbar() {
           className="group flex items-center gap-2.5 font-bold tracking-tight text-foreground transition-all hover:opacity-90"
         >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-105">
-            <BookOpen className="h-5 w-5 text-primary transition-transform duration-300 group-hover:rotate-[-6deg]" />
+            <BookOpen className="h-5 w-5 text-primary transition-transform duration-300 group-hover:-rotate-6" />
           </div>
           <span className="hidden sm:inline-block text-lg font-bold">
             Notes App
@@ -91,6 +113,13 @@ export default function Navbar() {
               Admin
             </Link>
           </Button>
+          {!isAuth ? (
+            <Button variant="outline"
+            onClick={handlelogout}
+          >
+              <LogOut />
+          </Button>
+          ) : null}
         </nav>
 
         {/* Mobile Menu Button */}

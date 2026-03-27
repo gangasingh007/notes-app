@@ -13,7 +13,7 @@ export const loginSchema = z.object({
     password : z.string().min(6)
 })
 
-export const addClassSchema  =z.object({
+export const addClassSchema = z.object({
     course : z.string(),
     semester : z.string(),
     section : z.string()
