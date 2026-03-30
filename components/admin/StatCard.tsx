@@ -5,7 +5,7 @@ interface StatCardProps {
   value: number
   icon: React.ElementType
   description?: string
-  trend?: string // E.g., "+12% from last month"
+  trend?: string
 }
 
 export default function StatCard({
