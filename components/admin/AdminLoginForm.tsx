@@ -156,7 +156,7 @@ export default function AdminLoginForm() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 text-md font-semibold bg-primary hover:opacity-90 text-background border-0 transition-opacity"
+                className="w-full h-12 text-md font-bold bg-primary hover:opacity-90 text-background border-0 transition-opacity"
               >
                 {isLoading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Authenticating...</> : "Sign In"}
               </Button>

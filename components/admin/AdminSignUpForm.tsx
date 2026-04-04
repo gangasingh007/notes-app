@@ -108,7 +108,7 @@ export default function AdminSignUpForm() {
       >
         
         {/* LEFT PANEL - Branding & Image Placeholder */}
-        <div className="hidden lg:flex w-1/2 flex-col justify-between bg-muted/20 p-12 relative overflow-hidden">
+        <div className="hidden md:flex lg:flex w-1/2 flex-col justify-between bg-muted/20 p-12 relative overflow-hidden">
           {/* Decorative background glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-500/10 blur-[100px] rounded-full pointer-events-none" />
 
@@ -120,7 +120,7 @@ export default function AdminSignUpForm() {
           >
             {/* Image Placeholder */}
             <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
-               <Image src="/register.avif" className="rounded-2xl shadow-xl" alt="StudySync" width={300} height={300} priority />
+               <Image src="/register.avif" className="rounded-2xl shadow-xl" alt="StudySync" width={600} height={300} priority />
             </motion.div>
 
             {/* Branding Text */}
@@ -149,9 +149,6 @@ export default function AdminSignUpForm() {
             transition={{ delay: 0.8 }}
             className="z-10 mt-auto pt-12"
           >
-            <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">
-              EST. 2024 — STUDY SYNC DIGITAL INFRASTRUCTURE
-            </p>
           </motion.div>
         </div>
 
@@ -294,7 +291,7 @@ export default function AdminSignUpForm() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-12 text-md font-semibold bg-primary hover:opacity-90 text-background border-0 transition-opacity"
+                className="w-full h-12 text-md font-bold bg-primary hover:opacity-90 text-background border-0 transition-opacity"
               >
                 {loading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating...</> : "Sign Up"}
               </Button>
