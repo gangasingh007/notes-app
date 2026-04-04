@@ -2,15 +2,19 @@
 
 import { LayoutDashboard, BookOpen, User, ChevronLeft, ChevronRight, Zap } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const pathname = usePathname()
+
+  // Helper function to determine if a path is active
+  const isActive = (path: string) => pathname === path
 
   return (
     <aside 
-      className={`relative flex h-screen flex-col bg-[#0b0e14] border-r border-white/5 py-8 transition-all duration-300 ease-in-out font-sans ${
+      className={`relative flex h-screen flex-col bg-background border-r border-border py-8 transition-all duration-300 ease-in-out font-sans ${
         isCollapsed ? "w-20 px-3" : "w-64 px-4"
       }`}
     >
@@ -18,7 +22,7 @@ export default function Sidebar() {
       {/* Collapse/Expand Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-10 z-50 flex h-6 w-6 items-center justify-center rounded-full bg-[#1e293b] border border-white/10 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+        className="absolute -right-3 top-10 z-50 flex h-6 w-6 items-center justify-center rounded-full bg-background border border-border text-muted-foreground shadow-sm hover:text-foreground hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
@@ -27,18 +31,18 @@ export default function Sidebar() {
       {/* Logo Section */}
       <div className={`mb-10 flex items-center ${isCollapsed ? "justify-center" : "px-2"}`}>
         {isCollapsed ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/10 text-[#c084fc]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
             <Zap className="h-6 w-6 fill-current" />
           </div>
         ) : (
-          <div className="overflow-hidden whitespace-nowrap">
-            <h1 className="text-2xl font-extrabold tracking-tight text-[#c084fc]">
+          <Link href="/dashboard" className="flex flex-col overflow-hidden whitespace-nowrap group">
+            <h1 className="text-2xl font-extrabold tracking-tight text-primary transition-colors group-hover:text-primary/80">
               StudySync
             </h1>
-            <p className="text-xs text-muted-foreground mt-1 font-medium text-slate-400">
+            <p className="text-xs text-muted-foreground mt-1 font-medium">
               Academic Hub
             </p>
-          </div>
+          </Link>
         )}
       </div>
 
@@ -47,67 +51,57 @@ export default function Sidebar() {
         <Link
           href="/dashboard"
           title="Dashboard"
-          className={`flex items-center rounded-xl bg-white/5 py-3 text-sm font-semibold text-white transition-colors border border-white/5 shadow-sm overflow-hidden whitespace-nowrap ${
-            isCollapsed ? "justify-center px-0" : "gap-3 px-4"
-          }`}
+          className={`flex items-center rounded-xl py-3 text-sm font-medium transition-colors overflow-hidden whitespace-nowrap ${
+            isActive("/dashboard") 
+              ? "bg-accent text-accent-foreground font-semibold shadow-sm" 
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+          } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
-          <LayoutDashboard className="h-5 w-5 min-w-[20px] text-[#c084fc]" />
+          <LayoutDashboard className={`h-5 w-5 min-w-[20px] ${isActive("/dashboard") ? "text-primary" : ""}`} />
           {!isCollapsed && <span>Dashboard</span>}
         </Link>
 
         <Link
           href="/subjects"
           title="Subjects"
-          className={`flex items-center rounded-xl py-3 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-colors overflow-hidden whitespace-nowrap ${
-            isCollapsed ? "justify-center px-0" : "gap-3 px-4"
-          }`}
+          className={`flex items-center rounded-xl py-3 text-sm font-medium transition-colors overflow-hidden whitespace-nowrap ${
+            isActive("/subjects") 
+              ? "bg-accent text-accent-foreground font-semibold shadow-sm" 
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+          } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
-          <BookOpen className="h-5 w-5 min-w-[20px]" />
+          <BookOpen className={`h-5 w-5 min-w-[20px] ${isActive("/subjects") ? "text-primary" : ""}`} />
           {!isCollapsed && <span>Subjects</span>}
         </Link>
 
         <Link
           href="/profile"
           title="Profile"
-          className={`flex items-center rounded-xl py-3 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-colors overflow-hidden whitespace-nowrap ${
-            isCollapsed ? "justify-center px-0" : "gap-3 px-4"
-          }`}
+          className={`flex items-center rounded-xl py-3 text-sm font-medium transition-colors overflow-hidden whitespace-nowrap ${
+            isActive("/profile") 
+              ? "bg-accent text-accent-foreground font-semibold shadow-sm" 
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+          } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
-          <User className="h-5 w-5 min-w-[20px]" />
+          <User className={`h-5 w-5 min-w-[20px] ${isActive("/profile") ? "text-primary" : ""}`} />
           {!isCollapsed && <span>Profile</span>}
         </Link>
       </nav>
 
       {/* Bottom User Profile Section */}
-      <div className={`mt-auto border-t border-white/10 pt-6 ${isCollapsed ? "px-0" : "px-2"}`}>
-        <div 
-          className={`flex items-center cursor-pointer hover:opacity-80 transition-opacity ${
-            isCollapsed ? "justify-center" : "gap-3"
-          }`}
+      <div className={`mt-auto border-t border-border pt-6 ${isCollapsed ? "px-0" : "px-2"}`}>
+        <Link
+          href="/admin"
+          title="Admin Portal"
+          className={`flex items-center rounded-xl py-3 text-sm font-bold transition-all shadow-sm ${
+            isActive("/admin")
+              ? "bg-primary text-background ring-2 ring-primary/30 ring-offset-2 ring-offset-background"
+              : "bg-primary text-background hover:bg-primary/90"
+          } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
-          {/* Avatar */}
-          <div className="relative h-10 w-10 min-w-[40px] overflow-hidden rounded-full border border-white/10 bg-[#1e293b] flex-shrink-0">
-            <Image 
-              src="/placeholder-avatar.jpg" 
-              alt="Alex Rivera" 
-              fill
-              className="object-cover"
-              unoptimized
-            />
-            {/* Fallback initials if image fails */}
-            <div className="flex h-full w-full items-center justify-center bg-sky-500/20 text-sky-200 text-xs font-bold absolute inset-0 -z-10">
-              AR
-            </div>
-          </div>
-          
-          {/* User Info (Hidden when collapsed) */}
-          {!isCollapsed && (
-            <div className="flex flex-col overflow-hidden whitespace-nowrap">
-              <span className="text-sm font-bold text-white tracking-wide truncate">Alex Rivera</span>
-              <span className="text-xs text-slate-400 font-medium mt-0.5 truncate">B.Tech Engineering</span>
-            </div>
-          )}
-        </div>
+          <LayoutDashboard className="h-5 w-5 min-w-[20px]" />
+          {!isCollapsed && <span>Admin Portal</span>}
+        </Link>
       </div>
       
     </aside>

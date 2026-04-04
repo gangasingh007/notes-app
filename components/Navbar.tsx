@@ -83,19 +83,17 @@ export default  function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden sm:flex items-center gap-5">
-     
-
+        <nav className=" sm:flex items-center gap-3 ">
           <Button
             asChild
             size="sm"
-            className={`ml-2 font-semibold shadow-md active:scale-[0.97] transition-all duration-200 hover:shadow-lg ${
+            className={`ml-2 text-background font-bold shadow-md active:scale-[0.97] transition-all duration-200 hover:shadow-lg ${
               isActive("/admin")
                 ? "ring-2 ring-primary/30 ring-offset-2 ring-offset-background"
                 : ""
             }`}
           >
-            <Link href="/" className="flex items-center gap-1.5">
+            <Link href="/" className="hidden lg:flex md:flex items-center gap-1.5">
               <Home className="h-4 w-4" />
               Home
             </Link>
@@ -103,92 +101,11 @@ export default  function Navbar() {
           {!isAuth ? (
             <Button variant="outline"
             onClick={handlelogout}
+            className="ml-5"
           >
               <LogOut />
           </Button>
           ) : null}
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <Button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="sm:hidden bg-black/70 flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all hover:text-foreground hover:bg-muted active:scale-95"
-          aria-label="Toggle menu"
-          aria-expanded={mobileOpen}
-        >
-          <div className="relative h-5 w-5">
-            <Menu
-              className={`h-5 w-5 absolute inset-0 transition-all duration-300 ${
-                mobileOpen ? "opacity-0 rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
-              }`}
-            />
-            <X
-              className={`h-5 w-5 absolute inset-0 transition-all duration-300 ${
-                mobileOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"
-              }`}
-            />
-          </div>
-        </Button>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`sm:hidden fixed inset-0 top-16 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={() => setMobileOpen(false)}
-      />
-
-      {/* Mobile Menu Panel */}
-      <div
-        className={`sm:hidden fixed top-16 left-0 right-0 z-50 bg-background border-b border-border shadow-xl transition-all duration-300 ease-out ${
-          mobileOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-2 pointer-events-none"
-        }`}
-      >
-        <nav className="flex flex-col gap-1 p-4">
-          <Link
-            href="/home"
-            className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-base font-medium transition-all duration-200 active:scale-[0.98] ${
-              isActive("/home")
-                ? "text-foreground bg-muted shadow-sm"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-            }`}
-          >
-            <div
-              className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${
-                isActive("/home") ? "bg-primary/10" : "bg-muted"
-              }`}
-            >
-              <Home className={`h-4.5 w-4.5 ${isActive("/home") ? "text-primary" : ""}`} />
-            </div>
-            Home
-            {isActive("/home") && (
-              <span className="ml-auto h-2 w-2 rounded-full bg-primary" />
-            )}
-          </Link>
-
-          <Link
-            href="/admin"
-            className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-base font-medium transition-all duration-200 active:scale-[0.98] ${
-              isActive("/admin")
-                ? "text-foreground bg-muted shadow-sm"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-            }`}
-          >
-            <div
-              className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${
-                isActive("/admin") ? "bg-primary/10" : "bg-muted"
-              }`}
-            >
-              <ShieldCheck className={`h-4.5 w-4.5 ${isActive("/admin") ? "text-primary" : ""}`} />
-            </div>
-            Admin Portal
-            {isActive("/admin") && (
-              <span className="ml-auto h-2 w-2 rounded-full bg-primary" />
-            )}
-          </Link>
         </nav>
       </div>
     </header>
