@@ -32,7 +32,7 @@ export default  function Navbar() {
  
   async function handlelogout(){
     await logout();
-    redirect("/admin")
+    redirect("/")
   }
 
   useEffect(() => {
@@ -83,21 +83,8 @@ export default  function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden sm:flex items-center gap-1.5">
-          <Link
-            href="/home"
-            className={`relative flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-all duration-200 ${
-              isActive("/home")
-                ? "text-foreground bg-muted"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-            }`}
-          >
-            <Home className="h-4 w-4" />
-            Home
-            {isActive("/home") && (
-              <span className="absolute -bottom-[13px] left-1/2 -translate-x-1/2 h-[2px] w-6 rounded-full bg-primary transition-all" />
-            )}
-          </Link>
+        <nav className="hidden sm:flex items-center gap-5">
+     
 
           <Button
             asChild
@@ -108,9 +95,9 @@ export default  function Navbar() {
                 : ""
             }`}
           >
-            <Link href="/admin" className="flex items-center gap-1.5">
-              <ShieldCheck className="h-4 w-4" />
-              Admin
+            <Link href="/" className="flex items-center gap-1.5">
+              <Home className="h-4 w-4" />
+              Home
             </Link>
           </Button>
           {!isAuth ? (
