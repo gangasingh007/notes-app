@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     // 1. Flex container for the whole screen
-    <div className="flex h-screen overflow-hidden bg-slate-950"> 
+    <div className="flex h-screen overflow-hidden bg-background"> 
       
       {/* 2. Sidebar wrapper - allow Sidebar to control width (supports collapsed state) */}
       <aside className="flex-none hidden md:block ">

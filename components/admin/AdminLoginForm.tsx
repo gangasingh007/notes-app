@@ -199,7 +199,7 @@ export default function AdminLoginForm() {
           >
             {/* Image Placeholder */}
             <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
-               <Image src="/login.avif" className="rounded-2xl shadow-xl" alt="StudySync" width={300} height={300} priority />
+               <Image src="/login.avif" className="rounded-2xl shadow-xl" alt="StudySync" width={600} height={300} priority />
             </motion.div>
 
             {/* Branding Text */}
