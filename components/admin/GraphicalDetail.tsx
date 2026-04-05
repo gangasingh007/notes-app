@@ -14,20 +14,20 @@ type ChartRow = { month: string; resources: number; subjects: number }
 
 export default function GraphicalDetail({ data }: { data: ChartRow[] }) {
   return (
-    <div className="w-full rounded-[2rem] mt-9 bg-card border border-white/5 p-6 shadow-2xl">
+    <div className="w-full rounded-[2rem] mt-9 bg-card border border-border p-6 shadow-2xl">
       <div className="mb-6">
         <h3 className="text-xl font-bold text-foreground tracking-tight">Growth Trends</h3>
-        <p className="text-sm text-slate-400 font-medium">Resources added over the last 6 months</p>
+        <p className="text-sm text-muted-foreground font-medium">Resources added over the last 6 months</p>
       </div>
 
       <div className="h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={data }
+            data={data}
             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
           >
             {/* Background Grid */}
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
             
             {/* Axes */}
             <XAxis 
@@ -49,21 +49,25 @@ export default function GraphicalDetail({ data }: { data: ChartRow[] }) {
             {/* Tooltip */}
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: 'card', 
-                border: '1px solid border',
+                backgroundColor: '#0b0e14', // Solid dark color for tooltip background
+                border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '12px',
-                color: 'foreground'
+                color: '#ffffff'
               }}
-              itemStyle={{ color: 'foreground' }}
+              itemStyle={{ color: '#e2e8f0' }}
             />
+            
             <defs>
+              {/* Purple Gradient for Resources */}
               <linearGradient id="colorResources" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="primary" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="primary" stopOpacity={0}/>
+                <stop offset="5%" stopColor="#c084fc" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="#c084fc" stopOpacity={0}/>
               </linearGradient>
+              
+              {/* Blue Gradient for Subjects */}
               <linearGradient id="colorSubjects" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="primary" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="primary" stopOpacity={0}/>
+                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
               </linearGradient>
             </defs>
 
@@ -72,7 +76,7 @@ export default function GraphicalDetail({ data }: { data: ChartRow[] }) {
               type="monotone" 
               dataKey="resources" 
               name="Resources"
-              stroke="orange" 
+              stroke="#c084fc" 
               strokeWidth={3}
               fillOpacity={1} 
               fill="url(#colorResources)" 
@@ -81,7 +85,7 @@ export default function GraphicalDetail({ data }: { data: ChartRow[] }) {
               type="monotone" 
               dataKey="subjects" 
               name="Subjects"
-              stroke="blue" 
+              stroke="#3b82f6" 
               strokeWidth={3}
               fillOpacity={1} 
               fill="url(#colorSubjects)" 

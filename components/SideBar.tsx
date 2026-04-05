@@ -1,6 +1,6 @@
 "use client"
 
-import { LayoutDashboard, BookOpen, User, ChevronLeft, ChevronRight, Zap } from "lucide-react"
+import { LayoutDashboard, ChevronLeft, ChevronRight, Zap, Calendar, Book, Home, BookA, BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -8,8 +8,6 @@ import { useState } from "react"
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
-
-  // Helper function to determine if a path is active
   const isActive = (path: string) => pathname === path
 
   return (
@@ -18,8 +16,7 @@ export default function Sidebar() {
         isCollapsed ? "w-20 px-3" : "w-64 px-4"
       }`}
     >
-      
-      {/* Collapse/Expand Toggle Button */}
+
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="absolute -right-3 top-10 z-50 flex h-6 w-6 items-center justify-center rounded-full bg-background border border-border text-muted-foreground shadow-sm hover:text-foreground hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
@@ -28,16 +25,15 @@ export default function Sidebar() {
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
       </button>
 
-      {/* Logo Section */}
       <div className={`mb-10 flex items-center ${isCollapsed ? "justify-center" : "px-2"}`}>
         {isCollapsed ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-            <Zap className="h-6 w-6 fill-current" />
+          <div className="flex h-10 w-10 items-center justify-center text-xl font-bold rounded-xl bg-primary/10 ">
+            <Book className="text-primary" />
           </div>
         ) : (
-          <Link href="/dashboard" className="flex flex-col overflow-hidden whitespace-nowrap group">
-            <h1 className="text-2xl font-extrabold tracking-tight text-primary transition-colors group-hover:text-primary/80">
-              StudySync
+          <Link href="/home" className="flex flex-col overflow-hidden whitespace-nowrap group">
+            <h1 className="text-3xl font-extrabold tracking-tight transition-colors ">
+              Notes <span className="text-primary">App</span>
             </h1>
             <p className="text-xs text-muted-foreground mt-1 font-medium">
               Academic Hub
@@ -46,49 +42,47 @@ export default function Sidebar() {
         )}
       </div>
 
-      {/* Navigation Links */}
       <nav className="flex-1 space-y-2">
         <Link
-          href="/dashboard"
-          title="Dashboard"
+          href="/home"
+          title="Home"
           className={`flex items-center rounded-xl py-3 text-sm font-medium transition-colors overflow-hidden whitespace-nowrap ${
-            isActive("/dashboard") 
+            isActive("/home") 
               ? "bg-accent text-accent-foreground font-semibold shadow-sm" 
               : "text-muted-foreground hover:bg-muted hover:text-foreground"
           } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
-          <LayoutDashboard className={`h-5 w-5 min-w-[20px] ${isActive("/dashboard") ? "text-primary" : ""}`} />
-          {!isCollapsed && <span>Dashboard</span>}
+          <Home className={`h-5 w-5 min-w-[20px] ${isActive("/dashboard") ? "text-primary" : ""}`} />
+          {!isCollapsed && <span>Home</span>}
         </Link>
 
         <Link
-          href="/subjects"
-          title="Subjects"
+          href="/syllabus"
+          title="Syllabus"
           className={`flex items-center rounded-xl py-3 text-sm font-medium transition-colors overflow-hidden whitespace-nowrap ${
-            isActive("/subjects") 
+            isActive("/syllabus") 
               ? "bg-accent text-accent-foreground font-semibold shadow-sm" 
               : "text-muted-foreground hover:bg-muted hover:text-foreground"
           } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
           <BookOpen className={`h-5 w-5 min-w-[20px] ${isActive("/subjects") ? "text-primary" : ""}`} />
-          {!isCollapsed && <span>Subjects</span>}
+          {!isCollapsed && <span>Syllabus</span>}
         </Link>
 
         <Link
-          href="/profile"
-          title="Profile"
+          href="/datesheet"
+          title="DateSheet"
           className={`flex items-center rounded-xl py-3 text-sm font-medium transition-colors overflow-hidden whitespace-nowrap ${
-            isActive("/profile") 
+            isActive("/datesheet") 
               ? "bg-accent text-accent-foreground font-semibold shadow-sm" 
               : "text-muted-foreground hover:bg-muted hover:text-foreground"
           } ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"}`}
         >
-          <User className={`h-5 w-5 min-w-[20px] ${isActive("/profile") ? "text-primary" : ""}`} />
-          {!isCollapsed && <span>Profile</span>}
+          <Calendar className={`h-5 w-5 min-w-[20px] ${isActive("/profile") ? "text-primary" : ""}`} />
+          {!isCollapsed && <span>Datesheet</span>}
         </Link>
       </nav>
 
-      {/* Bottom User Profile Section */}
       <div className={`mt-auto border-t border-border pt-6 ${isCollapsed ? "px-0" : "px-2"}`}>
         <Link
           href="/admin"
