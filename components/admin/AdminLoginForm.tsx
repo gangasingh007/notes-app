@@ -204,8 +204,8 @@ export default function AdminLoginForm() {
 
             {/* Branding Text */}
             <motion.div variants={itemVariants} className="text-center space-y-2">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">StudySync</h1>
-              <p className="text-muted-foreground font-medium">Academic Hub</p>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Notes<span className="text-primary">App</span></h1>
+              <p className="text-muted-foreground font-medium">Your Notes, Your Way</p>
             </motion.div>
 
             {/* Stats */}
