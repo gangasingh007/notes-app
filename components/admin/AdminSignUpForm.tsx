@@ -125,8 +125,8 @@ export default function AdminSignUpForm() {
 
             {/* Branding Text */}
             <motion.div variants={itemVariants} className="text-center space-y-2">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">StudySync</h1>
-              <p className="text-muted-foreground font-medium">Academic Hub</p>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Notes<span className="text-primary">App</span></h1>
+              <p className="text-muted-foreground font-medium">Your Notes, Your Way</p>
             </motion.div>
 
             {/* Stats */}
@@ -218,7 +218,7 @@ export default function AdminSignUpForm() {
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+91-XXXXX-XXXXX"
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   className="pl-10 bg-muted/40 border-transparent hover:bg-muted/60 focus-visible:bg-transparent transition-colors h-11"

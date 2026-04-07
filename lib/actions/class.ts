@@ -54,3 +54,58 @@ export async function addClass(data: classProps) {
     }
   }
 }
+
+export async function getClassdata(){
+  try {
+    const classes = await prisma.class.findMany({
+      select: {
+        id: true,
+        course: true,
+        section: true,
+        semester: true,
+        _count: {
+          select: {
+            Subjects: true,
+          },
+        },
+      },
+      orderBy: [
+        { course: 'asc' },
+        { semester: 'asc' },
+        { section: 'asc' }
+      ]
+    })
+
+    return {
+      success: true,
+      data: classes,
+    }
+  } catch (error) {
+    console.error("Error fetching classes with subject counts:", error)
+    return { 
+      success: false, 
+      message: "Internal server error while fetching classes." 
+    }
+  }
+}
+
+
+export async function getSubjectswithId(id:string){
+  try {
+    const data = await prisma.subject.findMany({
+      where:{
+        classId : id
+      }
+    })
+    return {
+      sucess : true,
+      data : data
+    }
+  } catch (error) {
+    console.error("Error fetching the subjects:", error)
+    return { 
+      success: false, 
+      message: "Internal server error while fetching resources." 
+    }
+  }
+}
