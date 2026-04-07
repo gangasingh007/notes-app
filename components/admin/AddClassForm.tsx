@@ -174,11 +174,8 @@ export default function AddClassForm({ onSuccess }: { onSuccess?: () => void }) 
           animate="visible"
         >
       {/* Animated Background Glows */}
-      <motion.div 
+      <div 
         className="absolute -top-20 -right-20 h-48 w-48 rounded-full bg-primary/20 blur-[80px] pointer-events-none"
-        variants={glowVariants}
-        initial="initial"
-        animate="animate"
       />
       <motion.div 
         className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-purple-500/10 blur-[80px] pointer-events-none"
@@ -350,7 +347,7 @@ export default function AddClassForm({ onSuccess }: { onSuccess?: () => void }) 
           <Button
             type="submit"
             disabled={loading || !formData.course || !formData.semester || !formData.section || (showCustomCourse && !formData.customCourse)}
-            className="w-full h-12 mt-2 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all relative overflow-hidden group"
+            className="w-full h-12 mt-2 text-background rounded-xl font-bold shadow-lg hover:shadow-xl transition-all relative overflow-hidden group"
           >
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/25 to-primary/0"

@@ -5,13 +5,9 @@ import { motion } from "framer-motion"
 import { BookMarked, Loader2, AlertCircle, FolderOpen, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getSubjectswithId } from "@/lib/actions/class"
+import { getSubjectswithId } from "@/lib/actions/subject"
+import { Subject } from "@/types"
 
-type Subject = {
-  id: string
-  name: string
-  classId: string
-}
 
 export default function SubjectGrid({ classId }: { classId: string }) {
   const [subjects, setSubjects] = useState<Subject[]>([])

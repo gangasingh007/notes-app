@@ -18,3 +18,15 @@ export const addClassSchema = z.object({
     semester : z.string(),
     section : z.string()
 })
+
+export const addSubjectSchema = z.object({
+    name : z.string().min(3),
+    classId : z.string(),
+})
+
+export const addResourceSchema = z.object({
+    subjectId: z.string().min(1),
+    name: z.string().min(1),
+    link: z.string().url(),
+    type: z.enum(["video", "document"]),
+})

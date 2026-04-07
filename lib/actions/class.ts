@@ -90,22 +90,3 @@ export async function getClassdata(){
 }
 
 
-export async function getSubjectswithId(id:string){
-  try {
-    const data = await prisma.subject.findMany({
-      where:{
-        classId : id
-      }
-    })
-    return {
-      sucess : true,
-      data : data
-    }
-  } catch (error) {
-    console.error("Error fetching the subjects:", error)
-    return { 
-      success: false, 
-      message: "Internal server error while fetching resources." 
-    }
-  }
-}

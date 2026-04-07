@@ -1,9 +1,7 @@
 import { getAnalytics } from "@/lib/actions/dashboard"
 import AdminDetails from "./AdminDetails"
 import GraphicalDetail from "./GraphicalDetail"
-import Navbar from "../Navbar"
 import Link from "next/link"
-import { Button } from "../ui/button"
 import { Plus } from "lucide-react"
 
 export default async function AdminDashboard() {

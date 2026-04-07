@@ -1,4 +1,6 @@
 
+import { ResourceType } from "@/app/generated/prisma/client"
+
 export interface registerAdminprops {
     firstName : string,
     lastName : string,
@@ -26,3 +28,21 @@ export type classProps = {
 export type NavItem = { label: string; href: string }
 
 export type jwtSecret = string | undefined;
+
+export interface ResourceProps {
+    subjectId : string,
+    name  : string,
+    link  : string,
+    type : ResourceType
+}
+
+export type Subject = {
+    id: string
+    name: string
+    classId: string
+}
+
+export interface subjectProps {
+    name : string
+    classId  :string
+}
