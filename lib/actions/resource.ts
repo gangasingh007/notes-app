@@ -75,3 +75,7 @@ export async function getResourceById(subjectId:string){
         }
     }
 }
+
+export async function getAllresources() {
+    // function that return all the resources along with the clases and the subjects
+}

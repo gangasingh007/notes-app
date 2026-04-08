@@ -46,3 +46,14 @@ export interface subjectProps {
     name : string
     classId  :string
 }
+
+export type ClassItem = {
+    id: string
+    course: string
+    section: string
+    semester: string
+    _count: {
+      Subjects: number
+    }
+  }
+  

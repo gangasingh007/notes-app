@@ -3,17 +3,8 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { BookOpen, ChevronRight, Layers, Users } from "lucide-react"
+import { ClassItem } from "@/types"
 
-// This matches the data structure returned from your getClassesWithSubjectCount action
-export type ClassItem = {
-  id: string
-  course: string
-  section: string
-  semester: string
-  _count: {
-    Subjects: number
-  }
-}
 
 export default function ClassGrid({ classes }: { classes: ClassItem[] }) {
   const containerVariants = {

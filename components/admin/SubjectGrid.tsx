@@ -25,7 +25,6 @@ export default function SubjectGrid({ classId }: { classId: string }) {
         const result = await getSubjectswithId(classId)
         
         if (isMounted) {
-          // Note: Checking both 'sucess' (your typo) and 'success' just in case you fix it later!
           if ((result.sucess || result.success) && result.data) { 
             setSubjects(result.data)
           } else {
