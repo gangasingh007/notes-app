@@ -5,8 +5,9 @@ import { motion } from "framer-motion"
 import { BookMarked, Loader2, AlertCircle, FolderOpen, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getSubjectswithId } from "@/lib/actions/subject"
 import { Subject } from "@/types"
+import { get } from "http"
+import { getSubjectswithId } from "@/lib/actions/subject"
 
 
 export default function SubjectGrid({ classId }: { classId: string }) {
@@ -22,13 +23,14 @@ export default function SubjectGrid({ classId }: { classId: string }) {
       setError("")
       
       try {
-        const result = await getSubjectswithId(classId)
+        const response = await getSubjectswithId(classId)
         
+
         if (isMounted) {
-          if ((result.sucess || result.success) && result.data) { 
-            setSubjects(result.data)
+          if (response.success && response.data) {
+            setSubjects(response.data)
           } else {
-            setError(result.message || "Failed to load subjects.")
+            setError(response.message || "Failed to load subjects.")
           }
         }
       } catch (err) {

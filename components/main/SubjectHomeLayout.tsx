@@ -4,10 +4,9 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Loader2, AlertCircle, FolderOpen, Library } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getSubjectswithId } from "@/lib/actions/subject"
 import { Subject } from "@/types"
 import SubjectCard from "./SubjectCard"
-
+import { getSubjectswithId } from "@/lib/actions/subject"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,13 +29,13 @@ export default function SubjectHomeLayout({ classId }: { classId: string }) {
       setError("")
       
       try {
-        const result = await getSubjectswithId(classId)
-        
+        const response = await getSubjectswithId(classId)
+
         if (isMounted) {
-          if ((result.sucess || result.success) && result.data) { 
-            setSubjects(result.data)
+          if (response.success && response.data) {
+            setSubjects(response.data)
           } else {
-            setError(result.message || "Failed to load subjects.")
+            setError(response.message || "Failed to load subjects.")
           }
         }
       } catch (err) {
@@ -122,7 +121,7 @@ export default function SubjectHomeLayout({ classId }: { classId: string }) {
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
         {subjects.map((subject) => (
-          <SubjectCard key={subject.id} subject={subject} />
+          <SubjectCard key={subject.id} subject={subject} classId={classId} />
         ))}
       </motion.div>
     )

@@ -6,22 +6,16 @@ import { addSubjectSchema } from "@/zod";
 
 export async function getSubjectswithId(id:string){
     try {
-      const data = await prisma.subject.findMany(
-        // {
-        //     where : { 
-        //         classId : id
-        //     }
-        // }
-      );
+        const data = await prisma.subject.findMany();
       return {
-        sucess : true,
+        success : true,
         data : data
       }
     } catch (error) {
       console.error("Error fetching the subjects:", error)
       return { 
         success: false, 
-        message: "Internal server error while fetching resources." 
+        message: "Internal server error while fetching subjects." 
       }
     }
 }

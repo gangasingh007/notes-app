@@ -89,4 +89,86 @@ export async function getClassdata(){
   }
 }
 
+export async function deleteClass(classId: string) {
+  try {
+    // 1. First, delete all resources connected to subjects of this class
+    await prisma.resource.deleteMany({
+      where: {
+        subject: {
+          classId: classId,
+        },
+      },
+    })
 
+    // 2. Then, delete all subjects connected to this class
+    await prisma.subject.deleteMany({
+      where: { classId: classId },
+    })
+
+    // 3. Now it is safe to delete the class
+    await prisma.class.delete({
+      where: { id: classId },
+    })
+
+    return {
+      success: true,
+      message: "Class and its subjects deleted successfully",
+    }
+  } catch (error) {
+    console.error("DeleteClass Error:", error)
+    return {
+      success: false,
+      message: "Internal server error while deleting class",
+    }
+  }
+}
+
+export async function updateClass(classId: string, data: classProps) {
+  try {
+    const parsed = addClassSchema.safeParse(data)
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: "Invalid input data",
+      }
+    }
+    const { semester, course, section } = parsed.data
+
+    const existingClass = await prisma.class.findFirst({
+      where: {
+        course,
+        section,
+        semester,
+        NOT: { id: classId },
+      },
+    })
+
+    if (existingClass) {
+      return {
+        success: false,
+        message: "Class already exists",
+      }
+    }
+
+    const updatedClass = await prisma.class.update({
+      where: { id: classId },
+      data: {
+        course,
+        section,
+        semester,
+      },
+    })
+
+    return {
+      success: true,
+      data: updatedClass,
+    }
+
+  } catch (error) {
+    console.error("UpdateClass Error:", error)
+    return {
+      success: false,
+      message: "Internal server error while updating class",
+    }
+  }
+}
