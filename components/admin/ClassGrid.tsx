@@ -8,7 +8,6 @@ import { BookOpen, ChevronRight, Layers, Users, Pencil, Trash2, Loader2, AlertCi
 import { ClassItem } from "@/types"
 import { deleteClass, updateClass } from "@/lib/actions/class"
 
-// --- ANIMATION VARIANTS ---
 const containerVariants = {
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -21,34 +20,45 @@ const cardVariants = {
 
 function ClassCard({ cls }: { cls: ClassItem }) {
   const router = useRouter()
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   
-  // Edit Form State
+  // --- MODAL STATES ---
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  
+  // --- ACTION STATES ---
+  const [isDeleting, setIsDeleting] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [error, setError] = useState("")
+
+  // Edit Form State
   const [editForm, setEditForm] = useState({
     course: cls.course,
     semester: cls.semester,
     section: cls.section
   })
-  const [error, setError] = useState("")
 
   // --- HANDLERS ---
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault() // Prevents the Link from triggering
+  
+  // 1. Opens the Delete Modal
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault() 
     e.stopPropagation()
+    setError("") // clear any previous errors
+    setIsDeleteModalOpen(true)
+  }
 
-    if (!window.confirm(`Are you sure you want to delete ${cls.course}? This cannot be undone.`)) {
-      return
-    }
-
+  // 2. Executes the actual delete operation
+  const confirmDelete = async () => {
     setIsDeleting(true)
+    setError("")
+    
     const result = await deleteClass(cls.id)
     
     if (result.success) {
+      setIsDeleteModalOpen(false)
       router.refresh() // Refresh the data
     } else {
-      alert(result.message || "Failed to delete class")
+      setError(result.message || "Failed to delete class")
       setIsDeleting(false)
     }
   }
@@ -73,7 +83,7 @@ function ClassCard({ cls }: { cls: ClassItem }) {
     <>
       <motion.div variants={cardVariants} className="h-full relative group">
         {/* The Link overlay - covers the whole card but stays behind the action buttons */}
-        <Link href={`/admin/manage/${cls.id}`} className="" aria-label={`Manage ${cls.course}`} >
+        <Link href={`/admin/manage/${cls.id}`}  aria-label={`Manage ${cls.course}`} >
 
         <div className="relative z-10 h-full flex flex-col rounded-[1.5rem] bg-card border border-border p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-primary/50 overflow-hidden pointer-events-none group-hover:pointer-events-auto">
           
@@ -89,19 +99,18 @@ function ClassCard({ cls }: { cls: ClassItem }) {
             {/* ACTION BUTTONS (Edit / Delete) */}
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
               <button 
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsEditModalOpen(true); }}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setError(""); setIsEditModalOpen(true); }}
                 className="p-2 bg-muted/50 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors"
                 title="Edit Class"
               >
                 <Pencil className="h-4 w-4" />
               </button>
               <button 
-                onClick={handleDelete}
-                disabled={isDeleting}
-                className="p-2 bg-muted/50 hover:bg-destructive/10 hover:text-destructive rounded-lg transition-colors disabled:opacity-50"
+                onClick={handleDeleteClick}
+                className="p-2 bg-muted/50 hover:bg-destructive/10 hover:text-destructive rounded-lg transition-colors"
                 title="Delete Class"
               >
-                {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                <Trash2 className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -133,17 +142,19 @@ function ClassCard({ cls }: { cls: ClassItem }) {
             </div>
           </div>
         </div>
-      </Link>
+        </Link>
       </motion.div>
 
-      {/* EDIT MODAL OVERLAY */}
+      {/* MODALS OVERLAY */}
       <AnimatePresence>
+        
+        {/* EDIT MODAL */}
         {isEditModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-md bg-card border border-border shadow-2xl rounded-2xl p-6"
             >
               <button 
@@ -158,7 +169,7 @@ function ClassCard({ cls }: { cls: ClassItem }) {
               </h2>
 
               {error && (
-                <div className="mb-4 flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 rounded-lg">
+                <div className="mb-4 flex items-center gap-2 p-3 text-sm text-destructive bg-destructive/10 rounded-lg border border-destructive/20">
                   <AlertCircle className="h-4 w-4" /> {error}
                 </div>
               )}
@@ -167,7 +178,7 @@ function ClassCard({ cls }: { cls: ClassItem }) {
                 <div className="space-y-1.5">
                   <label className="text-sm font-medium">Course</label>
                   <input 
-                    placeholder={``}
+                    placeholder="Course name"
                     required
                     type="text"
                     className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-primary outline-none transition-all"
@@ -179,7 +190,7 @@ function ClassCard({ cls }: { cls: ClassItem }) {
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium">Semester</label>
                     <input
-                    placeholder={``}
+                      placeholder="e.g. Fall 2026"
                       required
                       type="text"
                       className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-primary outline-none transition-all"
@@ -191,7 +202,7 @@ function ClassCard({ cls }: { cls: ClassItem }) {
                     <label className="text-sm font-medium">Section</label>
                     <input 
                       required
-                      placeholder={``}
+                      placeholder="e.g. A"
                       type="text"
                       className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-primary outline-none transition-all"
                       value={editForm.section}
@@ -211,7 +222,7 @@ function ClassCard({ cls }: { cls: ClassItem }) {
                   <button 
                     type="submit" 
                     disabled={isUpdating}
-                    className="px-4 py-2 text-sm font-bold  bg-primary text-background  rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+                    className="px-4 py-2 text-sm font-bold bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
                   >
                     {isUpdating ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Changes"}
                   </button>
@@ -220,11 +231,60 @@ function ClassCard({ cls }: { cls: ClassItem }) {
             </motion.div>
           </div>
         )}
+
+        {/* DELETE CONFIRMATION MODAL */}
+        {isDeleteModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-sm bg-card border border-border shadow-2xl rounded-2xl p-6 text-center"
+            >
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10 mb-6">
+                <AlertCircle className="h-8 w-8 text-destructive" />
+              </div>
+              
+              <h2 className="text-xl font-bold mb-2 text-foreground">
+                Delete Class?
+              </h2>
+              
+              <p className="text-sm text-muted-foreground mb-6">
+                Are you sure you want to delete <span className="font-semibold text-foreground">{cls.course}</span>? This action cannot be undone and will permanently remove this class.
+              </p>
+
+              {error && (
+                <div className="mb-4 flex items-center gap-2 p-3 text-sm text-left text-destructive bg-destructive/10 rounded-lg border border-destructive/20">
+                  <AlertCircle className="h-4 w-4 shrink-0" /> {error}
+                </div>
+              )}
+
+              <div className="flex gap-3 w-full">
+                <button 
+                  type="button" 
+                  onClick={() => setIsDeleteModalOpen(false)}
+                  disabled={isDeleting}
+                  className="flex-1 px-4 py-2.5 text-sm font-medium border text-muted-foreground hover:bg-muted rounded-xl transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="button" 
+                  onClick={confirmDelete}
+                  disabled={isDeleting}
+                  className="flex-1 px-4 py-2.5 text-sm font-bold bg-destructive text-destructive-foreground rounded-xl hover:bg-destructive/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Yes, Delete"}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
       </AnimatePresence>
     </>
   )
 }
-
 export default function ClassGrid({ classes }: { classes: ClassItem[] }) {
   if (!classes || classes.length === 0) {
     return (

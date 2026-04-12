@@ -1,6 +1,4 @@
 
-import { ResourceType } from "@/app/generated/prisma/client"
-
 export interface registerAdminprops {
     firstName : string,
     lastName : string,
@@ -57,3 +55,18 @@ export type ClassItem = {
     }
   }
   
+export type ResourceType = "video" | "document"
+
+export interface Resource {
+  id: string
+  name: string
+  link: string
+  type: ResourceType
+  subjectId: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ResourceListProps {
+  subjectId: string
+}

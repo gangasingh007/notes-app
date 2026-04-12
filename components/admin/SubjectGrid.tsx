@@ -119,7 +119,7 @@ export default function SubjectGrid({ classId }: { classId: string }) {
           {/* Assuming you want to navigate to a subject details page when clicked.
             Adjust the href to match your actual routing structure!
           */}
-          <Link href={`/subjects/${subject.id}`} className="block group h-full">
+          <Link href={`/admin/manage/${classId}/${subject.id}`} className="block group h-full">
             <div className="relative flex h-full flex-col justify-between rounded-[1.5rem] border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/50 overflow-hidden">
               
               {/* Subtle hover glow effect */}

@@ -57,15 +57,16 @@ export async function addResource(data: ResourceProps) {
 
 export async function getResourceById(subjectId:string){
     try {
-        const resources = await prisma.resource.findMany({
-            where : {
-                subjectId : subjectId
-            }
-        })
+        // const resources = await prisma.resource.findMany({
+        //     where : {
+        //         subjectId : subjectId
+        //     }
+        // })
+        const resources = await prisma.resource.findMany();
         return { 
-            sucess : true,
+            success : true,
             message : "Resources fetched successfully",
-            data : resources
+            result : resources
         }
     } catch (error) {
         console.error("Fetching resource Error:", error)
