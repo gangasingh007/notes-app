@@ -69,7 +69,7 @@ export default function ClassCard({ cls }: { cls: ClassItem }) {
                   <div className="p-1 rounded-md bg-background border border-border/50 shadow-sm">
                     <Users className="h-3.5 w-3.5 text-primary/80" />
                   </div>
-                  Sec {cls.section}
+                  {cls.section}
                 </div>
                 
                 {/* Visual Divider */}

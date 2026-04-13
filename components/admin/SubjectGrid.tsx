@@ -1,14 +1,28 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import { BookMarked, Loader2, AlertCircle, FolderOpen, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
+import { 
+  BookMarked, 
+  ChevronRight, 
+  Pencil, 
+  Trash2, 
+  Loader2, 
+  AlertCircle, 
+  X, 
+  FolderOpen 
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Subject } from "@/types"
-import { get } from "http"
 import { getSubjectswithId } from "@/lib/actions/subject"
+import SubjectCard from "./SubjectCard"
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+}
 
 export default function SubjectGrid({ classId }: { classId: string }) {
   const [subjects, setSubjects] = useState<Subject[]>([])
@@ -25,7 +39,6 @@ export default function SubjectGrid({ classId }: { classId: string }) {
       try {
         const response = await getSubjectswithId(classId)
         
-
         if (isMounted) {
           if (response.success && response.data) {
             setSubjects(response.data)
@@ -49,25 +62,11 @@ export default function SubjectGrid({ classId }: { classId: string }) {
     }
   }, [classId])
 
-  // Framer Motion Variants for a smooth staggered entrance
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  }
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 15 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
-  }
-
   // 1. Loading State
   if (isLoading) {
     return (
       <div className="flex min-h-[250px] w-full flex-col items-center justify-center rounded-[2rem] border border-border bg-card/50 shadow-sm">
-        <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+        <Loader2 className="h-8 w-8 animate-spin text-blue-500 mb-4" />
         <p className="text-sm font-medium text-muted-foreground">Loading subjects...</p>
       </div>
     )
@@ -115,41 +114,7 @@ export default function SubjectGrid({ classId }: { classId: string }) {
       className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       {subjects.map((subject) => (
-        <motion.div key={subject.id} variants={cardVariants}>
-          {/* Assuming you want to navigate to a subject details page when clicked.
-            Adjust the href to match your actual routing structure!
-          */}
-          <Link href={`/admin/manage/${classId}/${subject.id}`} className="block group h-full">
-            <div className="relative flex h-full flex-col justify-between rounded-[1.5rem] border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/50 overflow-hidden">
-              
-              {/* Subtle hover glow effect */}
-              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/0 blur-[40px] transition-all duration-500 group-hover:bg-primary/10 pointer-events-none" />
-
-              <div>
-                {/* Icon */}
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
-                  <BookMarked className="h-6 w-6" />
-                </div>
-
-                {/* Subject Name */}
-                <h4 className="text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-2">
-                  {subject.name}
-                </h4>
-              </div>
-
-              {/* Bottom Action Area */}
-              <div className="mt-8 flex items-center justify-between border-t border-border/50 pt-4">
-                <span className="text-xs font-semibold text-muted-foreground transition-colors group-hover:text-foreground">
-                  View Resources
-                </span>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:translate-x-1">
-                  <ChevronRight className="h-3 w-3" />
-                </div>
-              </div>
-
-            </div>
-          </Link>
-        </motion.div>
+        <SubjectCard key={subject.id} subject={subject} classId={classId} />
       ))}
     </motion.div>
   )

@@ -66,3 +66,63 @@ export async function addSubject(data : subjectProps){
           }
     }
 }
+
+export async function deleteSubject(subjectId: string) {
+    try {
+        await prisma.resource.deleteMany({ 
+            where: {
+                subjectId: subjectId
+            }
+        })
+        await prisma.subject.delete({
+            where: {
+                id: subjectId,
+            },
+        })
+        return {
+            success : true,
+            message : "The Subject has been deleted"
+        }
+    } catch (error) {
+        return { 
+            success: false, 
+            message: "Internal server error while deleting the subject." 
+          }
+    }
+}
+
+export async function updateSubject(subjectId: string, data :{ name: string, classId: string }) {
+    try {
+        const payload = data
+        const isExisting = await prisma.subject.findFirst({
+            where : {
+                classId : payload.classId,
+                name  : payload.name
+            }
+        })
+        if (isExisting){
+            return {
+                success : false,
+                message : "The Resource Already Exists"
+            }
+        }
+        await prisma.subject.update({
+            where: {
+                id: subjectId,
+            },
+            data: {
+                classId : payload.classId,
+                name : payload.name
+            },
+        })
+        return {
+            success : true,
+            message : "The Subject has been updated"
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Internal server error while updating the subject."
+        }
+    }
+}

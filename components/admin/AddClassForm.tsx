@@ -2,13 +2,13 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Loader2, Plus, AlertCircle, CheckCircle2, GraduationCap, Layers, Hash, ChevronDown, Sparkles } from "lucide-react"
+import { Loader2, Plus, AlertCircle, CheckCircle2, GraduationCap, Layers, Hash } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { addClass } from "@/lib/actions/class"
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import {
   Select,
   SelectContent,
@@ -17,18 +17,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-// Data for dropdowns
 const COURSES = [
   { value: "btech-cse", label: "B.Tech Computer Science" },
-  { value: "btech-ece", label: "B.Tech Electronics" },
-  { value: "btech-me", label: "B.Tech Mechanical" },
-  { value: "btech-ce", label: "B.Tech Civil" },
-  { value: "btech-ee", label: "B.Tech Electrical" },
-  { value: "bba", label: "Bachelor of Business Administration" },
-  { value: "bca", label: "Bachelor of Computer Applications" },
-  { value: "mba", label: "Master of Business Administration" },
-  { value: "mca", label: "Master of Computer Applications" },
-  { value: "other", label: "Other" },
+  { value: "btech-ce", label: "B.Tech Computer Engineering" },
+  { value: "mtech-cse", label: "M.Tech Computer Science" },
 ]
 
 const SEMESTERS = [
@@ -47,7 +39,7 @@ const SECTIONS = [
   { value: "B", label: "Section B" },
   { value: "C", label: "Section C" },
   { value: "D", label: "Section D" },
-  { value: "E", label: "Section E" },
+  { value: "CE", label: "Section CE" },
 ]
 
 export default function AddClassForm({ onSuccess }: { onSuccess?: () => void }) {

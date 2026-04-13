@@ -75,3 +75,69 @@ export async function getResourceById(subjectId:string){
         }
     }
 }
+export async function deleteResource(resourceId: string) {
+    try {
+        const deletedResource = await prisma.resource.delete({
+            where : {
+                id : resourceId
+            }
+        })
+        return {
+            success : true,
+            message : "Resource deleted successfully",
+            data : deletedResource
+        }
+    } catch (error) {        
+      console.error("Delete Resource Error:", error)
+        return {
+          success: false, 
+          message: "Internal server error",
+        }
+    }
+}
+
+export async function updateResource(resourceId: string, data: ResourceProps) {
+    try {
+        const parsed = addResourceSchema.safeParse(data)
+        if (!parsed.success) {
+            return {
+                success: false,
+                message: "Invalid input data",
+            }
+        }
+        const { name, link, subjectId, type } = parsed.data
+        const existingResource = await prisma.resource.findFirst({
+            where: {
+                subjectId,
+                OR: [{ name }, { link }],
+                NOT: { id: resourceId },
+            },
+        })
+        if (existingResource) {
+            return {
+                success: false,
+                message: "A resource with the same name or link already exists for this subject",
+            }
+        }
+        const updatedResource = await prisma.resource.update({
+            where: { id: resourceId },
+            data: {
+                name,
+                link,
+                subjectId,
+                type: type as ResourceType,
+            }, 
+        })
+        return {
+            success: true,
+            message: "Resource updated successfully",
+            data: updatedResource,
+        }
+    } catch (error) {
+        console.error("Update Resource Error:", error)
+        return {
+            success: false,
+            message: "Internal server error",
+        }
+    }
+}

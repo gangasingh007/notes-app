@@ -78,3 +78,12 @@ export interface Resource {
 export interface ResourceListProps {
   subjectId: string
 }
+export interface Resource {
+  id: string
+  name: string
+  link: string
+  type: ResourceType
+  subjectId: string
+  createdAt: string
+  updatedAt: string
+}
