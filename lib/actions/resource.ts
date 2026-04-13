@@ -57,12 +57,11 @@ export async function addResource(data: ResourceProps) {
 
 export async function getResourceById(subjectId:string){
     try {
-        // const resources = await prisma.resource.findMany({
-        //     where : {
-        //         subjectId : subjectId
-        //     }
-        // })
-        const resources = await prisma.resource.findMany();
+        const resources = await prisma.resource.findMany({
+            where : {
+                subjectId : subjectId
+            }
+        })
         return { 
             success : true,
             message : "Resources fetched successfully",
@@ -75,8 +74,4 @@ export async function getResourceById(subjectId:string){
           message: "Internal server error",
         }
     }
-}
-
-export async function getAllresources() {
-    // function that return all the resources along with the clases and the subjects
 }

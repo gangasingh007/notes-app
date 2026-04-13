@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Layers } from "lucide-react"
+import { BookCheck, Layers } from "lucide-react"
 import { ClassItem } from "@/types"
 import ClassCard from "./ClassCard"
 
@@ -22,10 +22,14 @@ export default function ClassHomeLayout({ classes }: { classes: ClassItem[] }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="flex flex-col gap-2"
-      >
+      ><div className="flex items-center gap-2">
+      <div className="flex h-10 w-10 items-center justify-center text-xl font-bold rounded-xl bg-primary/10 ">
+            <BookCheck className="text-primary" />
+          </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-foreground">
           Academic Classes
         </h2>
+        </div>
         <p className="text-base text-muted-foreground max-w-2xl">
           Access all the resources and class materials on the single go
         </p>

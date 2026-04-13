@@ -198,16 +198,16 @@ async function main() {
     }),
     prisma.resource.create({
       data: {
-        name: 'Data Structures Textbook Chapter 1',
-        link: 'https://example.com/docs/ds-chapter1.pdf',
+        name: 'Test Pdf for Google Drive Preview',
+        link: 'https://drive.google.com/file/d/16qmdsYBMuxbANyTUVvHv9A7b49_7k6lo/view?usp=sharing',
         type: ResourceType.document,
         subjectId: csSubjects[0].id,
       },
     }),
     prisma.resource.create({
       data: {
-        name: 'Trees and Graphs Guide',
-        link: 'https://example.com/docs/trees-graphs.pdf',
+        name: 'Test for word preview',
+        link: 'https://docs.google.com/document/d/1RNsRcL4iSTPtrBgWyIjAPVrBMC_fiuOe/edit?usp=sharing&ouid=101070998960209493258&rtpof=true&sd=true',
         type: ResourceType.document,
         subjectId: csSubjects[0].id,
       },
@@ -234,8 +234,8 @@ async function main() {
     }),
     prisma.resource.create({
       data: {
-        name: 'Algorithm Analysis Notes',
-        link: 'https://example.com/docs/algo-analysis.pdf',
+        name: 'Test for ppt preview',
+        link: 'https://docs.google.com/presentation/d/1NgWgPeJd-ah-zEWotScE5rzgzQKDr2wD/edit?usp=drive_link&ouid=101070998960209493258&rtpof=true&sd=true',
         type: ResourceType.document,
         subjectId: csSubjects[1].id,
       },

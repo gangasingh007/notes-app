@@ -91,7 +91,6 @@ export async function getClassdata(){
 
 export async function deleteClass(classId: string) {
   try {
-    // 1. First, delete all resources connected to subjects of this class
     await prisma.resource.deleteMany({
       where: {
         subject: {
@@ -100,12 +99,10 @@ export async function deleteClass(classId: string) {
       },
     })
 
-    // 2. Then, delete all subjects connected to this class
     await prisma.subject.deleteMany({
       where: { classId: classId },
     })
 
-    // 3. Now it is safe to delete the class
     await prisma.class.delete({
       where: { id: classId },
     })

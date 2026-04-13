@@ -6,7 +6,11 @@ import { addSubjectSchema } from "@/zod";
 
 export async function getSubjectswithId(id:string){
     try {
-        const data = await prisma.subject.findMany();
+        const data = await prisma.subject.findMany({
+            where: {
+                classId: id
+            }
+        });
       return {
         success : true,
         data : data
