@@ -2,6 +2,7 @@ import { getAnalytics } from "@/lib/actions/dashboard"
 import AdminDetails from "./AdminDetails"
 import GraphicalDetail from "./GraphicalDetail"
 
+
 export default async function AdminDashboard() {
   const res = await getAnalytics()
   const chartData =

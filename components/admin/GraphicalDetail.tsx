@@ -96,3 +96,4 @@ export default function GraphicalDetail({ data }: { data: ChartRow[] }) {
     </div>
   )
 }
+
