@@ -1,7 +1,8 @@
 import { getAnalytics } from "@/lib/actions/dashboard"
-import { Users, BookOpen, Layers, AlertCircle } from "lucide-react"
+import { Users, BookOpen, Layers, AlertCircle, Plus, ArrowBigLeft, LucideSquareChevronRight, ChevronsRightIcon } from "lucide-react"
 import StatCard from "./StatCard"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import Link from "next/link"
 
 
 export default async function AdminDetails() {
@@ -29,11 +30,20 @@ export default async function AdminDetails() {
 
   return (
     <section className="w-full space-y-6">
-      <div className="flex flex-col space-y-1">
-        <h2 className="text-2xl font-bold tracking-tight">Overview</h2>
-        <p className="text-sm text-muted-foreground">
-          High-level metrics and counts across your platform content.
-        </p>
+      <div className="flex justify-between items-center ">
+        <div className="">
+          <h2 className="text-2xl font-bold tracking-tight">Overview</h2>
+          <p className="text-sm text-muted-foreground">
+            High-level metrics and counts across your platform content.
+          </p>
+        </div>
+        <Link
+          href="/admin/manage"
+          className="flex mb-2 font-bold mt-8 justify-between items-center w-[290px] bg-primary text-background rounded-xl px-4 py-2 text-sm transition-colors overflow-hidden whitespace-nowrap"
+        >
+          <ChevronsRightIcon className="h-4 w-4 mr-2" />
+         Manage the classes and the resources
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

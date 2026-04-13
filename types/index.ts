@@ -40,6 +40,14 @@ export type Subject = {
     classId: string
 }
 
+
+export type ChartPoint = {
+  month: string
+  resources: number
+  subjects: number
+}
+
+
 export interface subjectProps {
     name : string
     classId  :string

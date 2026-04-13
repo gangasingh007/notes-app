@@ -1,12 +1,7 @@
 "use server"
 
+import { ChartPoint } from "@/types";
 import prisma from "../prisma"
-
-type ChartPoint = {
-  month: string
-  resources: number
-  subjects: number
-}
 
 function buildLast6MonthsChartData(
   resources: { createdAt: Date }[],
