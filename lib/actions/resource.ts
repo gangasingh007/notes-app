@@ -1,6 +1,6 @@
 "use server"
 
-import { ResourceType } from "../../app/generated/prisma/client"
+ import { ResourceType } from "../../app/generated/prisma/client"
 import { ResourceProps } from "@/types"
 import { addResourceSchema } from "@/zod"
 import prisma from "../prisma"
