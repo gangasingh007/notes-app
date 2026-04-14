@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import prisma from '@/lib/prisma';
-import { ResourceType } from '../app/generated/prisma/client';
 import * as bcrypt from 'bcryptjs';
+import { ResourceType } from '@prisma/client';
 
 async function main() {
   console.log('Starting seed...');
