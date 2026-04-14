@@ -29,13 +29,12 @@ export default function AddSubjectModal({ isOpen, onClose, classId, onSuccess }:
     setError("")
 
     try {
-      // Replace with your actual server action!
+
       const result = await addSubject({ classId, name })
-      
-     
+   
       if (result.success) {
         setName("") // Reset form
-        if (onSuccess) onSuccess() // Trigger refresh in parent
+        if (onSuccess) onSuccess()
         onClose() // Close modal
       } else {
         setError(result.message || "Failed to add subject.")
@@ -47,7 +46,6 @@ export default function AddSubjectModal({ isOpen, onClose, classId, onSuccess }:
     }
   }
 
-  // Reset state when closing via backdrop or X button
   const handleClose = () => {
     if (!isSubmitting) {
       setError("")

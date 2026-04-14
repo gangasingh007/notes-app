@@ -27,7 +27,7 @@ export async function getSubjectswithId(id:string){
 export async function addSubject(data : subjectProps){
     try {
         const payload = data
-        const parsedPayload = addSubjectSchema.safeParse(payload)
+        const parsedPayload = addSubjectSchema.safeParse({payload})
 
         if(parsedPayload.success){
             return {
