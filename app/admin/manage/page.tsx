@@ -14,7 +14,7 @@ function page() {
           setclasses(result.success && result.data ? result.data : []);
         };
         fetchData();
-      }, [classes.length]);
+      }, []);
 
     return (
     <div className="mx-auto w-full max-w-6xl  p-4 md:p-8">
