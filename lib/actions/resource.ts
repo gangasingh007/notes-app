@@ -4,7 +4,7 @@
 import { ResourceProps } from "@/types"
 import { addResourceSchema } from "@/zod"
 import prisma from "../prisma"
-import { ResourceType } from "@prisma/client"
+import { ResourceType } from "@/app/generated/prisma/enums"
 
 export async function addResource(data: ResourceProps) {
   try {
