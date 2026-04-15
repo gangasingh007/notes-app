@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { BookOpen, ChevronRight, Layers, Users, Pencil, Trash2, Loader2, AlertCircle, X } from "lucide-react"
 import { ClassItem } from "@/types"
-import { deleteClass, updateClass } from "@/lib/actions/class"
+import { deleteClass, getClassdata, updateClass } from "@/lib/actions/class"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -285,7 +285,9 @@ function ClassCard({ cls }: { cls: ClassItem }) {
     </>
   )
 }
-export default function ClassGrid({ classes }: { classes: ClassItem[] }) {
+export default async function ClassGrid() {
+  const result = await getClassdata();
+  const classes = result.success && result.data ? result.data : []
   if (!classes || classes.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center rounded-[2rem] border border-dashed border-border bg-card/50">

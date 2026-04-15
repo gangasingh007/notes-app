@@ -11,7 +11,7 @@ async  function page() {
         <div className = "flex mb-7 justify-end ">
             <AddClassForm />
         </div>
-        <ClassGrid classes={classes} />
+        <ClassGrid />
     </div>
   )
 }
