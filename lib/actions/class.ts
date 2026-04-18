@@ -57,24 +57,7 @@ export async function addClass(data: classProps) {
 
 export async function getClassdata(){
   try {
-    const classes = await prisma.class.findMany({
-      select: {
-        id: true,
-        course: true,
-        section: true,
-        semester: true,
-        _count: {
-          select: {
-            Subjects: true,
-          },
-        },
-      },
-      orderBy: [
-        { course: 'asc' },
-        { semester: 'asc' },
-        { section: 'asc' }
-      ]
-    })
+    const classes = await prisma.class.findMany()
 
     return {
       success: true,

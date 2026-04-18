@@ -58,9 +58,7 @@ export type ClassItem = {
     course: string
     section: string
     semester: string
-    _count: {
-      Subjects: number
-    }
+    
   }
   
 export type ResourceType = "video" | "document"

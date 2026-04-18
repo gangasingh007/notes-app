@@ -80,7 +80,7 @@ export default function ClassCard({ cls }: { cls: ClassItem }) {
                   <div className="p-1 rounded-md bg-background border border-border/50 shadow-sm">
                     <BookOpen className="h-3.5 w-3.5 text-primary/80" />
                   </div>
-                  {cls._count.Subjects} {cls._count.Subjects === 1 ? "Subject" : "Subjects"}
+                  {/* {cls._count.Subjects} {cls._count.Subjects === 1 ? "Subject" : "Subjects"} */}
                 </div>
               </div>
 
