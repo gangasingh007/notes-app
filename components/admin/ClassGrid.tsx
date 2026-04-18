@@ -37,9 +37,6 @@ function ClassCard({ cls }: { cls: ClassItem }) {
     section: cls.section
   })
 
-  // --- HANDLERS ---
-  
-  // 1. Opens the Delete Modal
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault() 
     e.stopPropagation()
@@ -131,10 +128,6 @@ function ClassCard({ cls }: { cls: ClassItem }) {
               <div className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs font-semibold text-muted-foreground">
                 <Users className="h-3.5 w-3.5" />
                 {cls.section}
-              </div>
-              <div className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1 text-xs font-semibold text-muted-foreground">
-                <BookOpen className="h-3.5 w-3.5" />
-                {cls._count?.Subjects || 0}
               </div>
             </div>
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-muted-foreground transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:translate-x-1">
