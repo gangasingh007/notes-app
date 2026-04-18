@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { redirect, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Home, ShieldCheck, Menu, X, LogOut } from "lucide-react"
+import { Home, Menu, X, LogOut } from "lucide-react"
 import { useState, useEffect } from "react"
 import { logout } from "@/lib/actions/auth"
 import { checkAuth } from "@/store/auth"
@@ -18,18 +18,22 @@ export default function Navbar() {
   useEffect(() => {
     let cancelled = false
 
-    checkAuth()
+    const authStatus = async()=>{
+      await checkAuth()
       .then((result) => {
         if (!cancelled) setIsAuth(result)
       })
       .catch(() => {
         if (!cancelled) setIsAuth(false)
       })
+    }
 
+    authStatus()
+    console.log("Auth status checked:", isAuth)
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [pathname])
   
   async function handlelogout(){
     await logout();
@@ -96,7 +100,7 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP LOGOUT BUTTON */}
-          { (
+          {isAuth && (
             <div className="ml-2 pl-2 border-l border-border/50">
               <Button 
                 variant="ghost"
@@ -162,7 +166,7 @@ export default function Navbar() {
               </Link>
 
               {/* MOBILE LOGOUT BUTTON */}
-              {(
+              {isAuth && (
                 <div className="mt-2 pt-2 border-t border-border/50">
                   <button
                     onClick={() => {

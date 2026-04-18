@@ -125,21 +125,8 @@ export default function AdminSignUpForm() {
 
             {/* Branding Text */}
             <motion.div variants={itemVariants} className="text-center space-y-2">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Notes<span className="text-primary">App</span></h1>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Notes <span className="text-primary">App</span></h1>
               <p className="text-muted-foreground font-medium">Your Notes, Your Way</p>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div variants={itemVariants} className="flex items-center gap-10 pt-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">12k+</p>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Students</p>
-              </div>
-              <div className="w-px h-10 bg-border/50" />
-              <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">500+</p>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1">Resources</p>
-              </div>
             </motion.div>
           </motion.div>
 
