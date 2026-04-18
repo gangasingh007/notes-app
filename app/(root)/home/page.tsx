@@ -2,6 +2,8 @@ import ClassHomeLayout from "@/components/main/ClassHomeLayout";
 import { getClassdata } from "@/lib/actions/class";
 import { ClassItem } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const result = await getClassdata();
   const classes: ClassItem[] = result.success && result.data ? result.data : [];

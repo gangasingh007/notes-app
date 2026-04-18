@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
 import { classProps } from "@/types"
 import { addClassSchema } from "@/zod"
@@ -39,6 +40,9 @@ export async function addClass(data: classProps) {
         semester,
       },
     })
+
+    revalidatePath("/home")
+    revalidatePath("/admin/manage")
 
     return {
       success: true,
@@ -90,6 +94,9 @@ export async function deleteClass(classId: string) {
       where: { id: classId },
     })
 
+    revalidatePath("/home")
+    revalidatePath("/admin/manage")
+
     return {
       success: true,
       message: "Class and its subjects deleted successfully",
@@ -138,6 +145,9 @@ export async function updateClass(classId: string, data: classProps) {
         semester,
       },
     })
+
+    revalidatePath("/home")
+    revalidatePath("/admin/manage")
 
     return {
       success: true,
